@@ -6,7 +6,7 @@ export const authGuard: CanActivateChildFn = (childRoute, state) => {
   const router = inject(Router);
   const authService = inject(AuthS);
 
-  //Simulation d'une vérification d'authentification
+  //Vérification d'authentification
   const isAuth: boolean = authService.getCurrentStatus();
 
   if(isAuth){

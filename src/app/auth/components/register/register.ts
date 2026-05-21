@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthS } from '../../services/auth-s';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,22 +11,44 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './register.css',
 })
 export class Register {
-  private readonly location: Location = inject(Location);
+  private readonly location = inject(Location);
+  private readonly authS = inject(AuthS);
+  private readonly router = inject(Router);
+
   userForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-Z\s]+$/)]),
     firstName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-Z\s]+$/)]),
     username: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)]),
   });
 
-  onSubmit(): void {
-    if(this.userForm.valid){
-      console.log('Formulaire valide:', this.userForm.value);
-    } else {
+   onSubmit(): void {
+    if (this.userForm.invalid) {
       console.log('Formulaire invalide');
       this.markFormGroupAsTouched();
+      return;
     }
+
+    const payload = {
+      name: this.userForm.value.name,
+      firstName: this.userForm.value.firstName,
+      username: this.userForm.value.username,
+      email: this.userForm.value.email,
+      password: this.userForm.value.password,
+    };
+
+    this.authS.register(payload).subscribe({
+      next: (user) => {
+        console.log('Utilisateur enregistré:', user);
+
+        this.userForm.reset();
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.error('Erreur lors de l\'enregistrement:', err);
+      }
+    });
   }
 
   // Méthode pour marquer tous les champs comme touchés
@@ -40,26 +64,23 @@ export class Register {
     return !!(field && field.invalid && field.touched);
   }
 
-  getFieldError(fieldName: string): string | null{
+  getFieldError(fieldName: string): string | null {
     const field = this.userForm.get(fieldName);
-    if(field?.errors && field?.touched){
-      if(field.errors['required']){
-        return `${fieldName} est requis.`;
+    if (field?.errors && field?.touched) {
+      if (field.errors['required']) {
+        return `Ce champ est requis.`;
       }
-      if(field.errors['name']){
-        return `${fieldName} doit contenir uniquement des lettres et des espaces.`;
+      if (field.errors['minlength']) {
+        return `Ce champ est trop court.`;
       }
-      if(field.errors['firstName']){
-        return `${fieldName} doit contenir uniquement des lettres et des espaces.`;
+      if (field.errors['email']) {
+        return `Ce champ n'est pas une adresse email valide.`;
       }
-      if(field.errors['username']){
-        return `${fieldName} doit contenir au moins 3 caractères.`;
-      }
-      if(field.errors['email']){
-        return `${fieldName} n'est pas une adresse email valide.`;
-      }
-      if(field.errors['password']){
-        return `${fieldName} doit contenir au moins 6 caractères.`;
+      if (field.errors['pattern']) {
+        if (fieldName === 'password') {
+          return `Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.`;
+        }
+        return `Ce champ contient des caractères invalides.`;
       }
     }
     return null;
