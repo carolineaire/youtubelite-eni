@@ -1,1 +1,22 @@
-<p>navbar works!</p>
+<nav class="container-fluid border-bottom py-2">
+  <div class="row align-items-center">
+
+    <!-- Logo -->
+    <div class="col-3 d-flex align-items-center">
+      <p class="m-0 fw-bold">Navbar Logo!</p>
+    </div>
+
+    <!-- Barre de recherche -->
+    <div class="col-6">
+      <app-search-bar></app-search-bar>
+    </div>
+
+    <!-- Bouton connexion -->
+    <div class="col-3 d-flex justify-content-end">
+      <a href="/auth/login" class="btn btn-primary">
+        Se connecter
+      </a>
+    </div>
+
+  </div>
+</nav>
