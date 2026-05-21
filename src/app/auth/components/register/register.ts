@@ -16,8 +16,6 @@ export class Register {
   private readonly router = inject(Router);
 
   userForm: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-Z\s]+$/)]),
-    firstName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-Z\s]+$/)]),
     username: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)]),
@@ -31,8 +29,6 @@ export class Register {
     }
 
     const payload = {
-      name: this.userForm.value.name,
-      firstName: this.userForm.value.firstName,
       username: this.userForm.value.username,
       email: this.userForm.value.email,
       password: this.userForm.value.password,

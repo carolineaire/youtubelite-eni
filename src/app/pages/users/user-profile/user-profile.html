@@ -1,2 +1,10 @@
-<p>user-profile works!</p>
+<h2>Mon profil</h2>
+<h3>Informations personnelles</h3>
+<ul>
+    <li><strong>Nom d'utilisateur :</strong> {{ user?.username }}</li>
+    <li><strong>Email :</strong> {{ user?.email }}</li>
+</ul>
 <a href="/profile/edit">Modifier le profil</a>
+<button type="button" class="btn btn-secondary"(click)="goBack()">
+    Retour 
+</button>

@@ -1,26 +1,6 @@
 <div class="form-container">
     <h2>S'inscrire</h2>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
-        <!-- Nom -->
-        <div class="mb-3">
-            <label for="name" class="form-label">Nom (*)</label>
-            <input type="text" id="name" formControlName="name" class="form-control" [class.is-invalid]="isFieldInvalid('name')">
-            @if(isFieldInvalid('name')){
-                <div class="error-message">
-                    {{getFieldError('name')}}
-                </div>
-            }
-        </div>
-         <!-- Prénom -->
-        <div class="mb-3">
-            <label for="firstName" class="form-label">Prénom (*)</label>
-            <input type="text" id="firstName" formControlName="firstName" class="form-control" [class.is-invalid]="isFieldInvalid('firstName')">
-            @if(isFieldInvalid('firstName')){
-                <div class="error-message">
-                    {{getFieldError('firstName')}}
-                </div>
-            }
-        </div>
          <!-- Username -->
         <div class="mb-3">
             <label for="username" class="form-label">Nom d'utilisateur (*)</label>
