@@ -1,2 +1,3 @@
-<p>playlist-bar works!</p>
-<a href="/profile">Username</a>
+@if(user){
+  <a href="/profile">{{ user.username }}</a>
+}

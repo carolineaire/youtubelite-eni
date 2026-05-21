@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
+import { AuthResponseT } from '../models/AuthResponseT';
 
 @Injectable({
   providedIn: 'root',
@@ -23,19 +24,25 @@ export class AuthS {
   isLoggedIn$ = this.loggedIn.asObservable();
 
 
-  login(cred: CredentialsT): Observable<CredentialsT> {
-    return this.http.post<CredentialsT>(this.loginEp, cred).pipe(tap((response) =>{
-      if (response.token) {
+  login(cred: CredentialsT): Observable<AuthResponseT> {
+    return this.http.post<AuthResponseT>(this.loginEp, cred).pipe(
+      tap((response) => {
         localStorage.setItem('token', response.token);
-      }
+        localStorage.setItem('user', JSON.stringify(response.user));
+        this.loggedIn.next(true);
+      })
+    );
+  }
+
+  register(user: CreateUserT): Observable<AuthResponseT> {
+    return this.http.post<AuthResponseT>(this.registerEp, user).pipe(
+      tap((response) => {
+        localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
 
         this.loggedIn.next(true);
-    }));
-  }
-
-  register(user: CreateUserT): Observable<UserT> {
-    return this.http.post<UserT>(this.registerEp, user);
+      })
+    );
   }
 
   logout(): void {
@@ -50,6 +57,11 @@ export class AuthS {
 
   getCurrentUser(): Observable<UserT | null> {
     return this.http.get<UserT>(this.meEp);
+  }
+
+  getStoredUser(): UserT | null {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
   }
 
   getCurrentStatus(): boolean{

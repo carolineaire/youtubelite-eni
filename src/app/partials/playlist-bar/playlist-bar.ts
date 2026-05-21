@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { AuthS } from '../../auth/services/auth-s';
 
 @Component({
   selector: 'app-playlist-bar',
@@ -6,4 +7,20 @@ import { Component } from '@angular/core';
   templateUrl: './playlist-bar.html',
   styleUrl: './playlist-bar.css',
 })
-export class PlaylistBar {}
+export class PlaylistBar implements OnInit {
+  user: UserT | null = null;
+
+  private readonly authService = inject(AuthS);
+
+  ngOnInit(): void {
+    this.authService.getCurrentUser().subscribe({
+      next: (user) => {
+        this.user = user;
+      },
+      error: (err) => {
+        console.error(err);
+        this.user = null;
+      },
+    });
+  }
+}

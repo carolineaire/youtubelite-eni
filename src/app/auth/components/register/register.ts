@@ -43,7 +43,7 @@ export class Register {
         console.log('Utilisateur enregistré:', user);
 
         this.userForm.reset();
-        this.router.navigate(['/']);
+        this.router.navigate(['/auth/login']);
       },
       error: (err) => {
         console.error('Erreur lors de l\'enregistrement:', err);
