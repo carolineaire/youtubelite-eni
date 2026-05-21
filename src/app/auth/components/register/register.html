@@ -1,4 +1,79 @@
-<p>register works!</p>
-<a href="/" class="btn btn-primary">
-    Je m'enregistre
-</a>
+<div class="form-container">
+    <h2>S'inscrire</h2>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+        <!-- Nom -->
+        <div class="mb-3">
+            <label for="name" class="form-label">Nom (*)</label>
+            <input type="text" id="name" formControlName="name" class="form-control" [class.is-invalid]="isFieldInvalid('name')">
+            @if(isFieldInvalid('name')){
+                <div class="error-message">
+                    {{getFieldError('name')}}
+                </div>
+            }
+        </div>
+         <!-- Prénom -->
+        <div class="mb-3">
+            <label for="firstName" class="form-label">Prénom (*)</label>
+            <input type="text" id="firstName" formControlName="firstName" class="form-control" [class.is-invalid]="isFieldInvalid('firstName')">
+            @if(isFieldInvalid('firstName')){
+                <div class="error-message">
+                    {{getFieldError('firstName')}}
+                </div>
+            }
+        </div>
+         <!-- Username -->
+        <div class="mb-3">
+            <label for="username" class="form-label">Nom d'utilisateur (*)</label>
+            <input type="text" id="username" formControlName="username" class="form-control" [class.is-invalid]="isFieldInvalid('username')">
+            @if(isFieldInvalid('username')){
+                <div class="error-message">
+                    {{getFieldError('username')}}
+                </div>
+            }
+        </div>
+         <!-- Email -->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email (*)</label>
+            <input type="email" id="email" formControlName="email" class="form-control" [class.is-invalid]="isFieldInvalid('email')">
+            @if(isFieldInvalid('email')){
+                <div class="error-message">
+                    {{getFieldError('email')}}
+                </div>
+            }
+        </div>
+         <!-- Mot de passe -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe (*)</label>
+            <input type="password" id="password" formControlName="password" class="form-control" [class.is-invalid]="isFieldInvalid('password')">
+            @if(isFieldInvalid('password')){
+                <div class="error-message">
+                    {{getFieldError('password')}}
+                </div>
+            }
+        </div>
+        <div class="form-actions">
+            <button 
+                type="submit" 
+                class="btn btn-primary"
+                [disabled]="userForm.invalid">
+                Je m'enregistre
+            </button>
+      
+            <button 
+                type="button" 
+                class="btn btn-secondary"
+                (click)="userForm.reset()">
+                Réinitialiser
+            </button>
+
+            <button 
+                type="button" 
+                class="btn btn-secondary"
+                (click)="goBack()">
+                Retour 
+            </button>
+        </div>
+    </form>
+</div>
+
+
