@@ -1,4 +1,44 @@
-<p>login works!</p>
-<a href="/auth/register" class="btn btn-secondary">
-    S'inscrire
-</a>
+<div class="form-container">
+    <h2>Se connecter</h2>
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()" novalidate>
+         <!-- Username -->
+        <div class="mb-3">
+            <label for="username" class="form-label">Nom d'utilisateur (*)</label>
+            <input type="text" id="username" formControlName="username" class="form-control" [class.is-invalid]="isFieldInvalid('username')">
+            @if(isFieldInvalid('username')){
+                <div class="error-message">
+                    {{getFieldError('username')}}
+                </div>
+            }
+        </div>
+         <!-- Mot de passe -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe (*)</label>
+            <input type="password" id="password" formControlName="password" class="form-control" [class.is-invalid]="isFieldInvalid('password')">
+            @if(isFieldInvalid('password')){
+                <div class="error-message">
+                    {{getFieldError('password')}}
+                </div>
+            }
+        </div>
+        <div class="form-actions">
+            <button 
+                type="submit" 
+                class="btn btn-primary"
+                [disabled]="authForm.invalid">
+                Je me connecte
+            </button>
+      
+            <a href="/auth/register" class="btn btn-secondary">
+                S'inscrire
+            </a>
+
+            <button 
+                type="button" 
+                class="btn btn-secondary"
+                (click)="goBack()">
+                Retour 
+            </button>
+        </div>
+    </form>
+</div>

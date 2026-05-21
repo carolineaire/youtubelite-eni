@@ -16,6 +16,7 @@ export class PlaylistBar implements OnInit {
     this.authService.getCurrentUser().subscribe({
       next: (user) => {
         this.user = user;
+        console.log('Current user:', user);
       },
       error: (err) => {
         console.error(err);
