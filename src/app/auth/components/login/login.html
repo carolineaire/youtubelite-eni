@@ -1,3 +1,7 @@
+@if (notif) {
+    {{ notif }}
+}
+
 <div class="form-container">
     <h2>Se connecter</h2>
     <form [formGroup]="authForm" (ngSubmit)="onSubmit()" novalidate>

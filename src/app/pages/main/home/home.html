@@ -1,4 +1,19 @@
-<p>home works!</p>
-<a href="/player" class="btn btn-primary">
-    Voir la vidéo
-</a>
+@if (notif) {
+    {{ notif }}
+}
+
+<div class="row g-3">
+
+    <div class="col-md-3">
+      <div class="card h-100 p-3">
+        <a href="/player" class="btn btn-primary">
+            Voir la vidéo
+        </a>
+        <a href="#" class="btn btn-secondary">
+            Ajouter à la playlist
+        </a>
+      </div>
+    </div>
+
+</div>
+

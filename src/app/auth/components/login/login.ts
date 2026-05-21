@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AuthS } from '../../services/auth-s';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -10,15 +10,21 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {
+export class Login implements OnInit {
+  private readonly params: ActivatedRoute = inject(ActivatedRoute)
   private readonly location = inject(Location);
   private readonly authS = inject(AuthS);
   private readonly router = inject(Router);
 
+  notif!: string
   authForm: FormGroup = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
+
+  ngOnInit() {
+    this.notif = this.params.snapshot?.queryParams['message'] ?? null
+  }
 
   onSubmit(): void {
     if (this.authForm.invalid) {

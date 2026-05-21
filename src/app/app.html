@@ -2,10 +2,12 @@
 
 <main class="d-flex vh-100">
   
-  <!-- Barre playlist -->
-  <div class="w-25 border-end">
-    <app-playlist-bar></app-playlist-bar>
-  </div>
+  @if(isAuth()){
+    <!-- Barre playlist -->
+    <div class="w-25 border-end">
+      <app-playlist-bar></app-playlist-bar>
+    </div>
+  }
 
   <!-- Contenu principal -->
   <div class="flex-grow-1 overflow-auto">

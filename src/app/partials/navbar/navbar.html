@@ -1,23 +1,29 @@
 <nav class="container-fluid border-bottom py-2">
-  <div class="row align-items-center">
+    <div class="row align-items-center">
 
-    <!-- Logo -->
-    <div class="col-3 d-flex align-items-center">
-      <p class="m-0 fw-bold">Navbar Logo!</p>
-      <a href="/" class="btn btn-secondary">Home</a>
+        <!-- Logo -->
+        <div class="col-5 d-flex align-items-center">
+            <p class="m-0 fw-bold">Navbar Logo!</p>
+            <a href="/" class="btn btn-secondary">Home</a>
+            <a href="/about" class="secondary-text">About</a>
+        </div>
+
+        <!-- Barre de recherche -->
+        <div class="col-5">
+            <app-search-bar></app-search-bar>
+        </div>
+
+        <!-- Bouton connexion/deconnexion -->
+        <div class="col-2 d-flex justify-content-end">
+            @if(isAuth()){
+                <button (click)="onLogout()" class="btn btn-danger">
+                    Se déconnecter
+                </button>
+            } @else {
+                <a href="/auth/login" class="btn btn-primary">
+                    Se connecter
+                </a>
+            }
+        </div>
     </div>
-
-    <!-- Barre de recherche -->
-    <div class="col-6">
-      <app-search-bar></app-search-bar>
-    </div>
-
-    <!-- Bouton connexion -->
-    <div class="col-3 d-flex justify-content-end">
-      <a href="/auth/login" class="btn btn-primary">
-        Se connecter
-      </a>
-    </div>
-
-  </div>
 </nav>
