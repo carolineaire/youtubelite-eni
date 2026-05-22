@@ -1,19 +1,57 @@
 @if (notif) {
+  <div class="alert alert-info text-center shadow-sm mb-4">
     {{ notif }}
+  </div>
 }
 
-<div class="row g-3">
+<div class="container py-4">
+  <div class="row g-4">
 
-    <div class="col-md-3">
-      <div class="card h-100 p-3">
-        <a href="/player" class="btn btn-primary">
-            Voir la vidéo
-        </a>
-        <a href="#" class="btn btn-secondary">
-            Ajouter à la playlist
-        </a>
+    @for(video of videos(); track video.id){
+
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+
+        <div class="card h-100 shadow-sm border-0">
+
+          <img
+            [src]="video.snippet.thumbnails.high.url"
+            class="card-img-top"
+            [alt]="video.snippet.title"
+          >
+
+          <div class="card-body d-flex flex-column">
+
+            <h6 class="card-title fw-bold mb-3">
+              {{ video.snippet.title }}
+            </h6>
+
+            <p class="text-muted small mb-4">
+              {{ video.snippet.channelTitle }}
+            </p>
+
+            <div class="mt-auto d-grid gap-2">
+
+              <a
+                href="/player"
+                class="btn btn-primary"
+              >
+                Voir la vidéo
+              </a>
+
+              <a
+                href="#"
+                class="btn btn-outline-secondary"
+              >
+                Ajouter à la playlist
+              </a>
+
+            </div>
+
+          </div>
+        </div>
+
       </div>
-    </div>
+    }
 
+  </div>
 </div>
-
