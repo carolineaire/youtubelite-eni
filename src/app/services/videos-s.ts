@@ -38,12 +38,13 @@ export class VideosS {
     });
   }
 
-  getVideos(): Observable<YoutubeApiResponse> {
-    const params = new HttpParams()
-      .set('part', 'snippet')
-      .set('chart', 'mostPopular')
-      .set('maxResults', this.MAX_RESULTS)
-      .set('key', this.API_KEY);
+  getVideos(regionCode: string = 'FR'): Observable<YoutubeApiResponse> {
+  const params = new HttpParams()
+    .set('part', 'snippet')
+    .set('chart', 'mostPopular')
+    .set('regionCode', regionCode)
+    .set('maxResults', this.MAX_RESULTS)
+    .set('key', this.API_KEY);
 
     return this.http.get<YoutubeApiResponse>(this.API_VIDEO_URL, { params });
   }
